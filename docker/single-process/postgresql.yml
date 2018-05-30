@@ -1,17 +1,13 @@
-version: '2'
+version: '3'
 
 services:
-  postgresdata:
-    image: postgres:9.5
-    command: /bin/true
-
   postgres:
     image: postgres:9.5
     restart: always
     env_file:
       - ../postgres.env
-    volumes_from:
-      - postgresdata
+    volumes:
+      - postgres:/var/lib/postgresql/data
 
   web:
     image: huginn/huginn-single-process
@@ -34,3 +30,6 @@ services:
     depends_on:
       - postgres
       - web
+
+volumes:
+  postgres:
